@@ -1,9 +1,8 @@
-name: docs 
+name: Build & deploy docs
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   deploy:
@@ -14,7 +13,7 @@ jobs:
 
       # Installs Python and other requirements
       - name: Prepare environment
-      - uses: actions/setup-python@v2
+        uses: actions/setup-python@v2
         with:
           python-version: 3.x
 
@@ -22,11 +21,11 @@ jobs:
 
       # Builds the static site
       - name: Build docs
-      - run: mkdocs build
+        run: mkdocs build
 
       # Deploys to the GitHub pages branch
       - name: Deploy to GitHub Pages
-      - uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./site
