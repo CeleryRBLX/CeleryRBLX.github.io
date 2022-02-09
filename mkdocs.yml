@@ -1,0 +1,70 @@
+site_name: Celery docs
+repo_url: https://github.com/thedoomed/Celery
+
+nav:
+  - Home: index.md
+  - Lua API: 
+    - lua/index.md
+    - Miscellaneous: lua/misc.md
+    - HTTP & I/O: lua/io.md
+    - Drawing Library: lua/drawing.md
+    - Debug Library: lua/debug.md
+    - RakNet: lua/rnet.md
+
+theme:
+  language: en
+  name: material
+  logo: assets/logo_dark.png
+  favicon: assets/logo_dark.png
+
+  palette:
+    scheme: slate
+    primary: green
+    accent: light green
+
+  icon:
+    repo: fontawesome/brands/github
+
+  features:
+    - navigation.tracking
+    - navigation.indexes
+    - navigation.instant
+    - content.tabs.link
+    - toc.follow
+
+markdown_extensions:
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.details
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.tilde
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+  - md_in_html
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/lua.css
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/thedoomed/Celery
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/nXu4FENMPj
