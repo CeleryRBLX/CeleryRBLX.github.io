@@ -1,0 +1,1074 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/logo_dark.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
+    
+    
+      
+        <title>Debug Library - Celery docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d6be258b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/lua.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="light-green">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#debug-library" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Celery docs" class="md-header__button md-logo" aria-label="Celery docs" data-md-component="logo">
+      
+  <img src="../../assets/logo_dark.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Celery docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Debug Library
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/thedoomed/Celery/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Celery docs" class="md-nav__button md-logo" aria-label="Celery docs" data-md-component="logo">
+      
+  <img src="../../assets/logo_dark.png" alt="logo">
+
+    </a>
+    Celery docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/thedoomed/Celery/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Lua API</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Lua API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lua API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../io/" class="md-nav__link">
+        HTTP & I/O
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drawing/" class="md-nav__link">
+        Drawing Library
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Debug Library
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Debug Library
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    Constants
+  </a>
+  
+    <nav class="md-nav" aria-label="Constants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-constants" class="md-nav__link">
+    Get constants
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-constants" class="md-nav__link">
+    Set constants
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-constant" class="md-nav__link">
+    Get constant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-constant" class="md-nav__link">
+    Set constant
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protos" class="md-nav__link">
+    Protos
+  </a>
+  
+    <nav class="md-nav" aria-label="Protos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-protos" class="md-nav__link">
+    Get protos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-protos" class="md-nav__link">
+    Set protos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-proto" class="md-nav__link">
+    Get proto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-proto" class="md-nav__link">
+    Set proto
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instructionscode" class="md-nav__link">
+    Instructions/code
+  </a>
+  
+    <nav class="md-nav" aria-label="Instructions/code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-code" class="md-nav__link">
+    Get code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-code" class="md-nav__link">
+    Set code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    Stack
+  </a>
+  
+    <nav class="md-nav" aria-label="Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-stack" class="md-nav__link">
+    Get stack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-stack" class="md-nav__link">
+    Set stack
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upvalues" class="md-nav__link">
+    Upvalues
+  </a>
+  
+    <nav class="md-nav" aria-label="Upvalues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-upvalues" class="md-nav__link">
+    Get upvalues
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-upvalues" class="md-nav__link">
+    Set upvalues
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-upvalue" class="md-nav__link">
+    Get upvalue
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-upvalue" class="md-nav__link">
+    Set upvalue
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnet/" class="md-nav__link">
+        RakNet
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    Constants
+  </a>
+  
+    <nav class="md-nav" aria-label="Constants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-constants" class="md-nav__link">
+    Get constants
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-constants" class="md-nav__link">
+    Set constants
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-constant" class="md-nav__link">
+    Get constant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-constant" class="md-nav__link">
+    Set constant
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protos" class="md-nav__link">
+    Protos
+  </a>
+  
+    <nav class="md-nav" aria-label="Protos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-protos" class="md-nav__link">
+    Get protos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-protos" class="md-nav__link">
+    Set protos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-proto" class="md-nav__link">
+    Get proto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-proto" class="md-nav__link">
+    Set proto
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instructionscode" class="md-nav__link">
+    Instructions/code
+  </a>
+  
+    <nav class="md-nav" aria-label="Instructions/code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-code" class="md-nav__link">
+    Get code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-code" class="md-nav__link">
+    Set code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    Stack
+  </a>
+  
+    <nav class="md-nav" aria-label="Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-stack" class="md-nav__link">
+    Get stack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-stack" class="md-nav__link">
+    Set stack
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upvalues" class="md-nav__link">
+    Upvalues
+  </a>
+  
+    <nav class="md-nav" aria-label="Upvalues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-upvalues" class="md-nav__link">
+    Get upvalues
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-upvalues" class="md-nav__link">
+    Set upvalues
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-upvalue" class="md-nav__link">
+    Get upvalue
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-upvalue" class="md-nav__link">
+    Set upvalue
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/thedoomed/Celery/edit/master/docs/lua/debug.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="debug-library">Debug Library<a class="headerlink" href="#debug-library" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Disclaimer #1</p>
+<p>Synapse claims that there's an ACE vulnerability but they won't provide any evidence of what was involved to actually execute shell-code. The possibility of such a thing happening, when you have more than usual sanitization checks, would rely on external means or another custom function that is apparently flawed. Until this <em>other</em> function is uncovered and the ACE is actually proven not by some staged video, the actual cause of the ACE is unknown, and I will not remove my debug library</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Disclaimer #2</p>
+<p>Use obfuscated scripts at your own risk, since any obfuscated script can destroy your PC at any given time, and even synapse cannot fully prevent this. Use obfuscated scripts only if they're from a TRUSTED source. I will not take responsibility for it</p>
+</div>
+<h2 id="constants">Constants<a class="headerlink" href="#constants" title="Permanent link">&para;</a></h2>
+<h3 id="get-constants">Get constants<a class="headerlink" href="#get-constants" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getconstants</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">):</span> <span class="n">table</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Returns the constants used in function <code>f</code>.</p>
+<hr />
+<h3 id="set-constants">Set constants<a class="headerlink" href="#set-constants" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setconstants</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span> <span class="n">constants</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Sets the constants used in function <code>f</code> to the table <code>constants</code>.</p>
+<hr />
+<h3 id="get-constant">Get constant<a class="headerlink" href="#get-constant" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getconstant</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">):</span> <span class="n">Variant</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Returns the constant at <code>index</code> from the function <code>f</code>'s constants.</p>
+<hr />
+<h3 id="set-constant">Set constant<a class="headerlink" href="#set-constant" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setconstant</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">constant</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Sets the constant at <code>index</code> from function <code>f</code> to <code>constant</code>.</p>
+<h2 id="protos">Protos<a class="headerlink" href="#protos" title="Permanent link">&para;</a></h2>
+<h3 id="get-protos">Get protos<a class="headerlink" href="#get-protos" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getprotos</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">):</span> <span class="n">table</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Returns the protos used in function <code>f</code>.</p>
+<hr />
+<h3 id="set-protos">Set protos<a class="headerlink" href="#set-protos" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setprotos</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span> <span class="n">protos</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Sets the protos used in function <code>f</code> to the table <code>protos</code>.</p>
+<hr />
+<h3 id="get-proto">Get proto<a class="headerlink" href="#get-proto" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getproto</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">):</span> <span class="kr">function</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Returns the proto at <code>index</code> from the function <code>f</code>'s protos.</p>
+<hr />
+<h3 id="set-proto">Set proto<a class="headerlink" href="#set-proto" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setproto</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">,</span> <span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">proto</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Sets the proto at <code>index</code> from the function <code>f</code>'s protos to <code>proto</code>.</p>
+<h2 id="instructionscode">Instructions/code<a class="headerlink" href="#instructionscode" title="Permanent link">&para;</a></h2>
+<h3 id="get-code">Get code<a class="headerlink" href="#get-code" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">Function definition (1 arg)</label><label for="__tabbed_9_2">Function definition (2 args)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getcode</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">):</span> <span class="n">table</span>
+</code></pre></div>
+<p>Returns the instructions in function <code>f</code>'s code.</p>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getcode</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">):</span> <span class="n">number</span>
+</code></pre></div>
+Returns the instruction at <code>index</code> from function <code>f</code>'s code.</p>
+</div>
+</div>
+</div>
+<hr />
+<h3 id="set-code">Set code<a class="headerlink" href="#set-code" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">Function definition (2 args)</label><label for="__tabbed_10_2">Function definition (3 args)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setcode</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span> <span class="n">code</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+<p>Set the instructions in function <code>f</code> to <code>code</code>.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setcode</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">instruction</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+<p>Sets the instruction at <code>index</code> from function <code>f</code>'s code to <code>instruction</code>.</p>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Disabled unless you are in experimental mode</p>
+</div>
+<h2 id="stack">Stack<a class="headerlink" href="#stack" title="Permanent link">&para;</a></h2>
+<h3 id="get-stack">Get stack<a class="headerlink" href="#get-stack" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">Function definition (no args)</label><label for="__tabbed_11_2">Function definition (1 arg)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getstack</span><span class="p">():</span> <span class="n">table</span>
+</code></pre></div>
+<p>Returns all elements in the current thread's stack.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getstack</span><span class="p">(</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">):</span> <span class="n">Variant</span>
+</code></pre></div>
+<p>Returns the element at <code>index</code> from the current function's stack.</p>
+</div>
+</div>
+</div>
+<hr />
+<h3 id="set-stack">Set stack<a class="headerlink" href="#set-stack" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="__tabbed_12_1">Function definition (1 argument)</label><label for="__tabbed_12_2">Function definition (2 arguments)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setstack</span><span class="p">(</span><span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span> <span class="n">stack</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+<p>Sets the current thread's stack to <code>stack</code>.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setstack</span><span class="p">(</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+<p>Sets the element at <code>index</code> from the current function's stack to <code>value</code>.</p>
+</div>
+</div>
+</div>
+<h2 id="upvalues">Upvalues<a class="headerlink" href="#upvalues" title="Permanent link">&para;</a></h2>
+<h3 id="get-upvalues">Get upvalues<a class="headerlink" href="#get-upvalues" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="13:1"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><div class="tabbed-labels"><label for="__tabbed_13_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getupvalues</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">):</span> <span class="n">table</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Returns the upvalues in the function <code>f</code>.</p>
+<hr />
+<h3 id="set-upvalues">Set upvalues<a class="headerlink" href="#set-upvalues" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="14:1"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><div class="tabbed-labels"><label for="__tabbed_14_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setupvalues</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span> <span class="n">upvalues</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Sets the upvalues in the function <code>f</code> to <code>upvalues</code>.</p>
+<hr />
+<h3 id="get-upvalue">Get upvalue<a class="headerlink" href="#get-upvalue" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="15:1"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="__tabbed_15_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">getupvalue</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">):</span> <span class="n">Variant</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Returns the upvalue at <code>index</code> from the function <code>f</code>'s upvalues.</p>
+<hr />
+<h3 id="set-upvalue">Set upvalue<a class="headerlink" href="#set-upvalue" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:1"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="__tabbed_16_1">Function definition</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kr">function</span> <span class="nc">debug</span><span class="p">.</span><span class="nf">setupvalue</span><span class="p">(</span><span class="o">&lt;</span><span class="kr">function</span><span class="err">&gt;</span> <span class="nf">f</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">index</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">):</span> <span class="n">void</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Sets the upvalue at <code>index</code> from the function <code>f</code>'s upvalues to <code>value</code>.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../drawing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Drawing Library" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Drawing Library
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../rnet/" class="md-footer__link md-footer__link--next" aria-label="Next: RakNet" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              RakNet
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/thedoomed/Celery" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+      
+      
+    
+    <a href="https://discord.gg/nXu4FENMPj" target="_blank" rel="noopener" title="discord.gg" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541zM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.instant", "content.tabs.link", "toc.follow"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
+      
+    
+  </body>
+</html>
