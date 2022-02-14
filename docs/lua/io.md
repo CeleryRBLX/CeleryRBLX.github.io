@@ -142,6 +142,6 @@ You can refer to [S^X docs](https://x.synapse.to/docs/reference/syn_lib.html#req
 
 !!! warning "Deprecation note"
 
-    ``game:HttpGet`` is supported for legacy reasons but it should not be used since it has been fully removed from ROBLOX for a couple of years now. 
+    ``game:HttpGet`` and ``game:HttpGetAsync`` are supported for legacy reasons but it should not be used since they have been fully removed from ROBLOX for a couple of years now. 
     
     Either use Celery's ``httpget`` or ``syn.request``.

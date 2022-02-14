@@ -52,15 +52,19 @@ Often abreviated as ``rnet``, RakNet is the [protocol](http://www.jenkinssoftwar
 
 ---
 
-## Send position
+## Send physics
 
 === "Function definition"
 
     ```lua
-    function rnet.sendposition(<vector3> value): void
+    function rnet.sendphysics(<CFrame> value): void
     ```
 
-Tells the server to locate your character at the position value.
+Tells the server to locate your character at ``value``.
+
+!!! warn
+    Rotation compression is still getting worked on.
+    ``rnet.sendphysics`` only supports position from the CFRame at the moment.
 
 ---
 
